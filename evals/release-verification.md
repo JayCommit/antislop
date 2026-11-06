@@ -103,3 +103,29 @@ The README shell copy from that clone into a separate project created `.agents/s
 On that clone, `git diff --check` and `git diff --check` against the empty tree both exited 0. Twenty-one local Markdown links resolved inside the pack. PyYAML parsed the `SKILL.md` frontmatter and `agents/openai.yaml`. Codex was still not installed, so `$antislop` was not invoked.
 
 GitHub Actions run [42148193587](https://github.com/JayCommit/antislop/actions/runs/42148193587) on that same commit completed with status success. The job runs `git diff --check` only. It does not install the skill or judge review quality. This paragraph was added after that run; it does not mean a later commit has already been observed.
+
+## v0.0.2 install paths — 2026-11-06
+
+This section was appended for the install-script release. It does not replace, re-score, or rewrite the records above. No quality improvement is claimed. `SKILL.md` was not edited. `wc -w SKILL.md` still printed `513`. The recorded core hash above still identifies that unchanged file.
+
+### What was run
+
+On this Linux checkout, `bash -n scripts/install.sh` exited 0. The script was then run against temporary directories, not a real home directory and not macOS.
+
+User scope `--host all` wrote `SKILL.md` directly to these paths under that temporary home:
+
+- `.grok/skills/antislop/`
+- `.cursor/skills/antislop/`
+- `.agents/skills/antislop/`
+- `.gemini/config/skills/antislop/`
+- `.gemini/antigravity-cli/skills/antislop/`
+- `.claude/skills/antislop/`
+
+`--host grok` and `--host grok-bot` each wrote only `.grok/skills/antislop/`. `--host antigravity --scope user` wrote both `.gemini` paths. Project scope `--host all` wrote the `.grok`, `.cursor`, `.agents`, and `.claude` paths under a temporary project. `--host antigravity --scope project` wrote only `.agents/skills/antislop/`.
+
+A second install against an existing destination exited non-zero and created no further directories. A separate Linux check of manual `cp -R` showed a direct copy when the destination was absent, and `antislop/antislop/SKILL.md` when the destination directory already existed. Running the script with project scope from a copy of this repository did not copy that new skill folder into itself and did not copy `.git` into the skill folder. Copied `SKILL.md`, `agents/openai.yaml`, and `references/examples.md` matched the source.
+
+### Not verified here
+
+- macOS, Windows, Finder zip, `Compress-Archive`, and `scripts/install.ps1`. PowerShell was not installed.
+- Live host discovery or invocation in Grok, Grok Bot, Cursor, the ChatGPT app, Codex, Antigravity, or Claude. The paired reviews were not repeated.
