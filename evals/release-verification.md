@@ -92,4 +92,14 @@ A whitespace scan found no CR characters, no trailing spaces or tabs, and no mis
 - The manual paired scenarios in `evals/README.md`. They were not repeated.
 - Other operating systems, screen readers, and a clean machine with a configured host.
 - GitHub Actions. The whitespace workflow had not run on GitHub at the time of this section. It is not evidence about skill behavior.
-- Whether the public clone URL installs. That check is after the first push and is not claimed here.
+- Whether a public clone installs. The paragraphs above were written before the push. The following section records the clone that was actually performed.
+
+## Public clone — 2026-11-06
+
+The first push was `3c2867efb27e5d05d57b2058ce2be173ffaf7f9e`. A fresh clone of `https://github.com/JayCommit/antislop` at that commit had `SKILL.md`, `references/`, `agents/`, `evals/`, `README.md`, and `LICENSE` at the repository root.
+
+The README shell copy from that clone into a separate project created `.agents/skills/antislop/SKILL.md`. There was no `.agents/skills/antislop/antislop/` directory. The copied `SKILL.md`, `references/patterns.md`, and `references/examples.md` were readable, and the catalog link `examples.md` resolved to `references/examples.md`.
+
+On that clone, `git diff --check` and `git diff --check` against the empty tree both exited 0. Twenty-one local Markdown links resolved inside the pack. PyYAML parsed the `SKILL.md` frontmatter and `agents/openai.yaml`. Codex was still not installed, so `$antislop` was not invoked.
+
+GitHub Actions run [42148193587](https://github.com/JayCommit/antislop/actions/runs/42148193587) on that same commit completed with status success. The job runs `git diff --check` only. It does not install the skill or judge review quality. This paragraph was added after that run; it does not mean a later commit has already been observed.
