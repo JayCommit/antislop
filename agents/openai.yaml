@@ -1,0 +1,4 @@
+interface:
+  display_name: "antislop"
+  short_description: "Keep agent-written code boring and maintainable"
+  default_prompt: "Use $antislop to review this change for concrete maintenance costs. Do not modify files."
