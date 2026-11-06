@@ -4,18 +4,38 @@ antislop is instruction text for an Agent Skill. It has no package, build step, 
 
 ## Install
 
-Copy this repository root into a separate project so the entry point is `.agents/skills/antislop/SKILL.md`, not a nested `antislop/antislop/` directory. Do not overwrite an existing installation without checking it. From the target project, with the source path replaced:
+Mac is the primary platform. Windows commands are second and were not executed in the v0.0.2 checks. From a separate project, this copies the repository so the entry point is `.agents/skills/antislop/SKILL.md`, not a nested `antislop/antislop/` directory:
+
+```sh
+bash /path/to/antislop/scripts/install.sh --host openai --scope project
+```
+
+Default `--scope user` writes under `$HOME`. Other hosts and paths are in [README.md](README.md). The script refuses an existing destination and skips `.git`.
+
+Manual project copy (macOS/Linux), run from the target project. Do not create the final `antislop` directory first. On Linux, `cp -R` into an existing destination nested an extra directory. Do not use `cp -a`.
 
 ```sh
 source="/path/to/antislop"
 destination="${PWD}/.agents/skills/antislop"
-mkdir -p .agents/skills
+mkdir -p "$(dirname "$destination")"
 if [ -e "$destination" ]; then
   echo "Installation already exists" >&2
   exit 1
 fi
-cp -a "$source" "$destination"
+cp -R "$source" "$destination"
 ```
+
+Windows, from the target project. This block was not run:
+
+```powershell
+$source = "$env:USERPROFILE\src\antislop"
+$destination = Join-Path (Get-Location) ".agents\skills\antislop"
+if (Test-Path -LiteralPath $destination) { throw "Installation already exists" }
+New-Item -ItemType Directory -Force -Path (Split-Path -Parent $destination) | Out-Null
+Copy-Item -LiteralPath $source -Destination $destination -Recurse
+```
+
+`scripts/install.ps1` accepts the same `--host` and `--scope` flags.
 
 In Codex, a read-only check is:
 
@@ -31,7 +51,10 @@ From this repository:
 
 ```sh
 git diff --check
+bash -n scripts/install.sh
 ```
+
+`bash -n` only parses the shell installer. It does not install the skill or prove the PowerShell script. Do not claim either installer was run on macOS or Windows unless you did that.
 
 Also confirm local Markdown links resolve inside the pack, `SKILL.md` frontmatter parses, and [agents/openai.yaml](agents/openai.yaml) parses. There is no committed test command. Discovering zero `unittest` tests is not a pass.
 

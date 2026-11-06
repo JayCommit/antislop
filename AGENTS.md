@@ -8,6 +8,7 @@ antislop is an instruction-only Agent Skill for maintainability judgment: questi
 - `references/patterns.md`, `references/examples.md`: optional diagnostic detail, loaded on demand.
 - `agents/openai.yaml`: Codex interface metadata; default prompt requests review without edits.
 - `evals/README.md`: manual comparison method; `evals/release-verification.md`: dated evidence and limitations.
+- `scripts/install.sh`, `scripts/install.ps1`: optional copy helpers for the host paths in `README.md`. They are not used during ordinary skill review and are not a test suite.
 - `README.md`, `LICENSE`: public installation guidance and MIT terms.
 - `CONTRIBUTING.md`, `SECURITY.md`, `CODE_OF_CONDUCT.md`: contributor checks, private vulnerability reporting, and conduct. They are not part of ordinary skill use.
 - `.github/workflows/whitespace.yml`: runs `git diff --check` only. It does not test skill behavior. `.github/ISSUE_TEMPLATE/bug_report.md` and `.github/PULL_REQUEST_TEMPLATE.md` are GitHub prompts, not skill instructions.
@@ -15,7 +16,7 @@ antislop is an instruction-only Agent Skill for maintainability judgment: questi
 
 ## Setup and checks
 
-Edit Markdown/YAML directly. No build, package installation, dependency manifest, or committed test suite is present. `.github/workflows/whitespace.yml` runs `git diff --check` for whitespace only and does not test skill behavior. Use an already configured agent host for behavioral checks. Follow `README.md` to copy the pack into a separate test project's `.agents/skills/antislop/`, then explicitly invoke `$antislop` for a read-only review.
+Edit Markdown/YAML directly. No build, package installation, dependency manifest, or committed test suite is present. `.github/workflows/whitespace.yml` runs `git diff --check` for whitespace only and does not test skill behavior. Use an already configured agent host for behavioral checks. Follow `README.md` to copy the pack into a separate test project's `.agents/skills/antislop/`. From that project, `bash scripts/install.sh --host openai --scope project` does the same copy. Then explicitly invoke `$antislop` for a read-only review. The v0.0.2 shell installer was path-checked on Linux only. `scripts/install.ps1` was not run. Neither script was run on macOS or Windows.
 
 Run from this directory:
 
